@@ -8,7 +8,7 @@ const customFetch = async (url, options) => {
         body.max_tokens = body.max_completion_tokens;
       }
       if (!body.max_tokens) {
-        body.max_tokens = 800;
+        body.max_tokens = 1500;
       }
       options.body = JSON.stringify(body);
     } catch (e) {
@@ -39,9 +39,9 @@ const wrapModel = (model) => {
 };
 
 const models = {
-  research: wrapModel(openrouter.chat('google/gemini-2.5-flash')),
-  reviewer: wrapModel(openrouter.chat('google/gemini-2.5-flash')),
-  writer: wrapModel(openrouter.chat('google/gemini-2.5-flash'))
+  research: wrapModel(openrouter.chat('openrouter/free')),
+  reviewer: wrapModel(openrouter.chat('openrouter/free')),
+  writer: wrapModel(openrouter.chat('openrouter/free'))
 };
 
 module.exports = { models };

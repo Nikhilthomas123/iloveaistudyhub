@@ -34,7 +34,7 @@ Write a high-quality report using the following structure with exact tags:
 - <Citation/Source 1>
 - <Citation/Source 2>
 `,
-        maxTokens: 800
+        maxTokens: 1500
     });
 
     return result.text;

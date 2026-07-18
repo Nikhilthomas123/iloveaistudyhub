@@ -51,12 +51,17 @@ Requirements
       model: models.research, // Reusing existing Google model
       system: "You are a helpful study assistant. Your job is to output strictly valid JSON conforming to the requested schema. Do not include markdown code block syntax (like ```json).",
       prompt: prompt,
-      maxTokens: 800,
+      maxTokens: 1500,
       temperature: 0.8,
     });
 
-    const cleanedText = result.text.trim().replace(/^```json\s*/i, '').replace(/```$/, '').trim();
-    const quizData = JSON.parse(cleanedText);
+    let text = result.text.trim();
+    const jsonStart = text.indexOf('{');
+    const jsonEnd = text.lastIndexOf('}');
+    if (jsonStart !== -1 && jsonEnd !== -1) {
+      text = text.substring(jsonStart, jsonEnd + 1);
+    }
+    const quizData = JSON.parse(text);
     if (!quizData.questions || !Array.isArray(quizData.questions)) {
       throw new Error("Invalid structure: 'questions' list not found.");
     }
