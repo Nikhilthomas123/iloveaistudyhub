@@ -10,46 +10,16 @@ export interface QuizResponse {
   questions: QuizQuestion[];
 }
 
+// In production (Vercel), set VITE_API_URL to your deployed backend, e.g.
+// https://your-backend.onrender.com/api
+// In local dev, it falls back to localhost:5000/api automatically.
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
 const API = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
-});
-
-let activePort: string | null = null;
-let detectingPromise: Promise<string> | null = null;
-
-// Auto-detect active backend port (3000 or 5000)
-const detectActivePort = async (): Promise<string> => {
-  if (import.meta.env.VITE_API_URL) {
-    return import.meta.env.VITE_API_URL;
-  }
-  if (activePort) return activePort;
-  if (detectingPromise) return detectingPromise;
-
-  detectingPromise = (async () => {
-    for (const port of [3000, 5000]) {
-      for (const host of ['127.0.0.1', 'localhost']) {
-        try {
-          await axios.get(`http://${host}:${port}/health`, { timeout: 2000 });
-          activePort = `http://${host}:${port}/api`;
-          return activePort;
-        } catch (e) {
-          // ignore and try next
-        }
-      }
-    }
-    detectingPromise = null;
-    return 'http://localhost:3000/api'; // default fallback
-  })();
-
-  return detectingPromise;
-};
-
-API.interceptors.request.use(async (config) => {
-  config.baseURL = await detectActivePort();
-  return config;
 });
 
 export const quizService = {
