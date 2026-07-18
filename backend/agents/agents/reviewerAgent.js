@@ -30,7 +30,7 @@ REVIEW_FEEDBACK:
 FINAL_DRAFT:
 [improved draft, maintaining the [EXECUTIVE_SUMMARY], [KEY_FINDINGS], and [CITATIONS] structure and tags exactly]
 `,
-        maxTokens: 2000
+        maxTokens: 800
     });
 
     return review.text;

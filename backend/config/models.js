@@ -8,7 +8,7 @@ const customFetch = async (url, options) => {
         body.max_tokens = body.max_completion_tokens;
       }
       if (!body.max_tokens) {
-        body.max_tokens = 1000;
+        body.max_tokens = 800;
       }
       options.body = JSON.stringify(body);
     } catch (e) {

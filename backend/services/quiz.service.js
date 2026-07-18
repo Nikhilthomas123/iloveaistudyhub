@@ -51,7 +51,7 @@ Requirements
       model: models.research, // Reusing existing Google model
       system: "You are a helpful study assistant. Your job is to output strictly valid JSON conforming to the requested schema. Do not include markdown code block syntax (like ```json).",
       prompt: prompt,
-      maxTokens: 1000,
+      maxTokens: 800,
       temperature: 0.8,
     });
 

@@ -16,7 +16,7 @@ Rules:
 `,
     prompt: `Research this topic: ${topic}`,
     maxSteps: 5,
-    maxTokens: 1000
+    maxTokens: 800
   });
 
   return result.text;

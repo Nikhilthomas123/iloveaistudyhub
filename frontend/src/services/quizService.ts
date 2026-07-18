@@ -27,16 +27,18 @@ const detectActivePort = async (): Promise<string> => {
 
   detectingPromise = (async () => {
     for (const port of [3000, 5000]) {
-      try {
-        await axios.get(`http://localhost:${port}/health`, { timeout: 800 });
-        activePort = `http://localhost:${port}/api`;
-        return activePort;
-      } catch (e) {
-        // ignore and try next port
+      for (const host of ['127.0.0.1', 'localhost']) {
+        try {
+          await axios.get(`http://${host}:${port}/health`, { timeout: 2000 });
+          activePort = `http://${host}:${port}/api`;
+          return activePort;
+        } catch (e) {
+          // ignore and try next
+        }
       }
     }
     detectingPromise = null;
-    return 'http://localhost:5000/api'; // default fallback
+    return 'http://localhost:3000/api'; // default fallback
   })();
 
   return detectingPromise;
