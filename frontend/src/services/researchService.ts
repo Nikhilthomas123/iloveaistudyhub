@@ -27,6 +27,9 @@ let detectingPromise: Promise<string> | null = null;
 
 // Auto-detect active backend port (3000 or 5000)
 const detectActivePort = async (): Promise<string> => {
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
   if (activePort) return activePort;
   if (detectingPromise) return detectingPromise;
 
